@@ -44,6 +44,8 @@ public class LoginController {
             return Response.status(401).entity("Invalid email or password").build();
         }
 
+
+
         String token = Jwt.upn(found.get().email())
                 .claim("userId", found.get().userId())
                 .claim("employeeId", found.get().employeeId())

@@ -1,13 +1,12 @@
 package org.acme.repository;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
-import java.lang.reflect.Field;
 
-import static org.acme.repository.EmployeeEnt.EMPLOYEE_ID;
 
 public record LoginEnt(
-        @ColumnName(USER_ID) Long userId,
+        @JsonIgnore @ColumnName(USER_ID) Long userId,
         @ColumnName(PASSWORD) String password,
         @ColumnName(FULL_NAME) String fullName,
         @ColumnName(EMAIL) String email,

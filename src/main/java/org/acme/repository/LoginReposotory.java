@@ -44,7 +44,7 @@ public class LoginReposotory {
                         .bind("email", email)
                         .registerRowMapper(ConstructorMapper.factory(LoginEnt.class))
                         .mapTo(LoginEnt.class)
-                        .findOne()
+                        .findFirst()
         );
     }
 
