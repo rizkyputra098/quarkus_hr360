@@ -40,11 +40,13 @@ public class LoginController {
     public Response signIn(LoginEnt loginEnt) {
         Optional<LoginEnt> found = loginReposotory.getAuthByEmail(loginEnt.email());
 
-        if (found.isEmpty() || !PasswordUtil.verify(loginEnt.password(), found.get().password())) {
-            return Response.status(401).entity("Invalid email or password").build();
+        if (found.isEmpty()) {
+            return Response.status(404).entity(Map.of("error", "Email not found")).build();
         }
 
-
+        if (!PasswordUtil.verify(loginEnt.password(), found.get().password())) {
+            return Response.status(401).entity(Map.of("error", "Incorrect password")).build();
+        }
 
         String token = Jwt.upn(found.get().email())
                 .claim("userId", found.get().userId())
@@ -54,4 +56,5 @@ public class LoginController {
 
         return Response.ok(Map.of("email", loginEnt.email(), "token", token)).build();
     }
+
 }

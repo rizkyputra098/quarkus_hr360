@@ -48,6 +48,20 @@ public class LoginReposotory {
         );
     }
 
+    public Optional<LoginEnt> getAuthByEmployeeId(Long employeeId) {
+        var query = String.format("SELECT %s FROM %s WHERE employee_id = :employeeId",
+                LoginEnt.FIELDS, LoginEnt.TABLE_NAME);
+
+        return jdbi.withHandle(handle ->
+                handle.createQuery(query)
+                        .bind("employeeId", employeeId)
+                        .registerRowMapper(ConstructorMapper.factory(LoginEnt.class))
+                        .mapTo(LoginEnt.class)
+                        .findFirst()
+        );
+    }
+
+
 
 
 

@@ -34,9 +34,17 @@ public class RegisterController {
                     .build();
         }
 
+//        // Cek employeeId sudah terdaftar
+//        Optional<LoginEnt> foundByEmployeeId = loginReposotory.getAuthByEmployeeId(Ent.employeeId());
+//        if (foundByEmployeeId.isPresent()) {
+//            return Response.status(409)
+//                    .entity(Map.of("error", "Employee ID already exists"))
+//                    .build();
+//        }
+
         LoginEnt created = loginReposotory.createLoginEnt(
                 Ent.password(), Ent.email(), Ent.fullName(), Ent.employeeId(), Ent.adminStatus()
         );
-        return Response.status(201).entity(created).build();
+        return Response.status(200).entity(created).build();
     }
 }

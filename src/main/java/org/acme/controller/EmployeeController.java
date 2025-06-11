@@ -1,10 +1,12 @@
 package org.acme.controller;
 
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.dto.UpdateEmployeeDTO;
+import org.acme.model.Employee;
 import org.acme.repository.EmployeeEnt;
 import org.acme.repository.EmployeeReposotory;
 import org.acme.until.JwtUntil;
@@ -34,7 +36,7 @@ public class EmployeeController {
     }
 
     @GET
-    @Path("/bytoken")
+    @Path("/profile")
     public Response findEmployeeByToken(){
         Long employeeId = JwtUntil.getEmployeeIdFromJwt(jwt);
 
@@ -61,21 +63,31 @@ public class EmployeeController {
             return Response.status(Response.Status.NOT_FOUND).entity("Employee not found").build();
         }
 
+
+
         employeeReposotory.updateEmployee(employeeId, request);
         return Response.ok("Employee updated successfully").build();
     }
 
 
-
-//    @POST
-//    @Path("/addemployess")
-//    public EmployeeEnt addEmployee(@Valid Employee employee) {
-//        return employeeReposotory.createEmployee(
-//                employee.position_level(),
-//                employee.fullname(),
-//                employee.address(),
-//                employee.phone(),
-//                employee.race()
-//        );
-//}
+    @POST
+    @Path("/addemployess")
+    public EmployeeEnt addEmployee(@Valid EmployeeEnt employeeEnt) {
+        return employeeReposotory.createEmployeeEnt(
+                employeeEnt.position_level(),
+                employeeEnt.fullname(),
+                employeeEnt.employee_num(),
+                employeeEnt.address(),
+                employeeEnt.address_permanent(),
+                employeeEnt.phone(),
+                employeeEnt.phone_emergency(),
+                employeeEnt.handphone(),
+                employeeEnt.sex(),
+                employeeEnt.birth_place(),
+                employeeEnt.birth_date(),
+                employeeEnt.blood_type(),
+                employeeEnt.email_address(),
+                employeeEnt.race()
+        );
+    }
 }

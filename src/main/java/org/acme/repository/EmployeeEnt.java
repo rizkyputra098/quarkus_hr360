@@ -1,12 +1,10 @@
 package org.acme.repository;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.annotation.Nullable;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 
 public record EmployeeEnt(
@@ -23,7 +21,13 @@ public record EmployeeEnt(
         @ColumnName(BIRTH_PLACE) String birth_place,
         @ColumnName(BIRTH_DATE) LocalDate birth_date,
         @ColumnName(BLOOD_TYPE) String blood_type,
-        @ColumnName(RACE) Integer race
+        @JsonIgnore @ColumnName(MARITAL_ID) Long marital_id,
+        @JsonIgnore @ColumnName(NATIONALITY_ID) Long nationality_Id,
+        @Nullable @ColumnName("MARITAL_STATUS") String marital_status,
+        @Nullable @ColumnName("NATIONALITY_NAME") String nationality_name,
+        @ColumnName(EMAIL_ADDRESS) String email_address,
+        @ColumnName(RACE) Long race,
+        @ColumnName(EMERGENCY_NAME) String emergency_name
 ) {
     public static final String TABLE_NAME = "hr_employee";
     public static final String EMPLOYEE_ID = "employee_id";
@@ -39,11 +43,18 @@ public record EmployeeEnt(
     public static final String BIRTH_PLACE = "birth_place";
     public static final String BIRTH_DATE = "birth_date";
     public static final String BLOOD_TYPE = "blood_type";
+    public static final String MARITAL_ID = "marital_id";
+    public static final String NATIONALITY_ID = "nationality_Id";
+    public static final String EMAIL_ADDRESS = "email_address";
     public static final String RACE = "race";
+    public static final String EMERGENCY_NAME = "emergency_name";
 
-    public static final String FIELDS = String.join(",", EMPLOYEE_ID, POSITION_LEVEL, EMPLOYEE_NUM,FULL_NAME,ADDRESS,ADDRESS_PERMANENT,PHONE,PHONE_EMERGENCY,HANDPHONE,SEX,BIRTH_PLACE,BIRTH_DATE,BLOOD_TYPE,RACE);
-    public static final String BINDER = " :employeeId, :position_level, :fullname, :address, :phone, :race";
-//    public EmployeeEnt withemployeeId(Long employeeId) {
-//        return new EmployeeEnt(employeeId, position_level, fullname, address, phone, race);
-//    }
+    public static final String FIELDS = String.join(",", EMPLOYEE_ID, POSITION_LEVEL, EMPLOYEE_NUM,FULL_NAME,ADDRESS,ADDRESS_PERMANENT,PHONE,PHONE_EMERGENCY,HANDPHONE,SEX,BIRTH_PLACE,BIRTH_DATE,BLOOD_TYPE, EMAIL_ADDRESS,MARITAL_ID,NATIONALITY_ID ,RACE);
+    public static final String BINDER = ":employeeId, :position_level, :employee_num, :fullname, :address, :address_permanent, :phone, :phone_emergency, :handphone, :sex, :birth_place, :birth_date, :blood_type,:marital_id,:nationalityId,:email_address, :race";
+    public EmployeeEnt withemployeeId(Long employeeId) {
+        return new EmployeeEnt(employeeId, position_level, employee_num, fullname,
+                address, address_permanent, phone, phone_emergency, handphone,
+                sex, birth_place, birth_date, blood_type,marital_id,nationality_Id,marital_status,nationality_name, email_address, race,emergency_name);
+    }
+
 }

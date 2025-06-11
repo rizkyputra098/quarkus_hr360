@@ -12,6 +12,7 @@ public record ScheduleEnt(
         @ColumnName(SCHEDULE_TYPE) Integer schedule_type,
         @ColumnName(D1) Long d1
 
+
 ) {
     public static final String TABLE_NAME = "hr_emp_schedule";
 

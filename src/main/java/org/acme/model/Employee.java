@@ -7,7 +7,7 @@ public record Employee(
         String address,
         String phone,
         String address_permanent,
-        String phone_permanent,
+        String phone_emergency,
         String handphone,
         Integer sex,
         String birth_place,
